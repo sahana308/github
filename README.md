@@ -1,4 +1,5 @@
-class Solution:
+ LEETCODE (Date: 27-01-2023)
+1)class Solution:
     def findSubString(self, str):
         a=str
         n=len(a)
@@ -24,16 +25,14 @@ class Solution:
                 
         return sol
   
-  
-  LEETCODE (Date: 25-01-2023)
- 1) UNIVALUED BINARY TREE
+ 2) UNIVALUED BINARY TREE
   class Solution:
     def isUnivalTree(self,t):
         if not t: return True
         if t.left:
             if t.left.val != t.val :
                 return False 
- 2) Invert Tree               
+ 3) Invert Tree               
    class Solution:
     def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
             if not root:
@@ -44,7 +43,7 @@ class Solution:
             root.right = self.invertTree(left)
             return root
 
-3) Balanced Binary Tree
+4) Balanced Binary Tree
 class Solution:
     def isBalanced(self, root: Optional[TreeNode]) -> bool :
         def dfs(root):
@@ -56,7 +55,7 @@ class Solution:
             return[balance, 1+max(left[1],right[1])]
        return dfs(root)[0] 
     
-4) Binary Tree Paths        
+5) Binary Tree Paths        
  class Solution:
     def binaryTreePaths(self, root: Optional[TreeNode]) -> List[str]:
         def backtrack(node, path, t):
