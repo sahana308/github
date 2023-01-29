@@ -124,3 +124,69 @@ class Solution:
         postorder(root)
         return sol
      
+LEETCODE(29-01-2023)
+1)Evaluate Boolean Binary Tree
+class Solution:
+    def evaluateTree(self, root: Optional[TreeNode]) -> bool:
+        if not root:
+            return False
+        if(root.val==2):
+            return self.evaluateTree(root.left) or self.evaluateTree(root.right)
+        if(root.val==3):
+            return self.evaluateTree(root.left) and self.evaluateTree(root.right)
+        return root.val
+ 2)Minimum Depth of Binary Tree
+ class Solution:
+    def minDepth(self, root: Optional[TreeNode]) -> int:
+        if root is None:
+            return 0
+
+        left = self.minDepth(root.left)
+        right = self.minDepth(root.right)
+
+        return 1 + (min(left,right) or max(left,right))
+  3)Balanced Binary Tree
+  class Solution:
+    def isBalanced(self, root: Optional[TreeNode]) -> bool :
+        def dfs(root):
+            if not root: 
+                return [True,0]
+            left = dfs(root.left)
+            right = dfs(root.right)
+            balance = (left[0] and right[0] and abs(left[1] - right[1])<=1)
+            return[balance, 1+max(left[1],right[1])]
+        return dfs(root)
+  4)Binary Tree Paths
+  class Solution:
+    def binaryTreePaths(self, root: Optional[TreeNode]) -> List[str]:
+        def backtrack(node, path, t):
+            ch = (node.left, node.right)
+            
+            path.append(str(node.val))
+
+            if not any(ch): 
+                t.append('->'.join(path))
+                
+            for ch in filter(None, ch):
+                backtrack(ch, path, t)
+                
+            path.pop()
+                    
+            return t
+        
+        return backtrack(root, [], [])
+   5)Combination Sum
+   class Solution(object):
+    def combinationSum(self, candidates, target):
+        res = []
+        self.dfs(candidates, target, [], res)
+        return res
+    
+    def dfs(self, nums, target, path, res):
+        if target < 0:
+            return 
+        if target == 0:
+            res.append(path)
+            return 
+        for i in range(len(nums)):
+            self.dfs(nums[i:], target-nums[i], path+[nums[i]], res)
