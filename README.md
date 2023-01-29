@@ -190,3 +190,8 @@ class Solution:
             return 
         for i in range(len(nums)):
             self.dfs(nums[i:], target-nums[i], path+[nums[i]], res)
+    6)Pow(x, n)
+    class Solution:
+    def myPow(self, x: float, n: int) -> float:
+        return x ** n
+    
