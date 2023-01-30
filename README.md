@@ -194,4 +194,74 @@ class Solution:
     class Solution:
     def myPow(self, x: float, n: int) -> float:
         return x ** n
-    
+LEETCODE(30-01-2023)
+1)Binary Search
+class Solution:
+    def search(self, nums: List[int], target: int) -> int:
+        l = 0
+        r = len(nums)-1
+        
+        while l<=r:
+            mid = (l+r)//2
+            if nums[mid]==target:
+                return mid
+            elif nums[mid]>target:
+                r = mid-1
+            else:
+                l = mid+1
+        return -1
+2)Diameter of Binary Tree
+class Solution:
+    def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
+        self.dia=0
+        def dfs(root):
+            if not root:
+                return 0
+            left = dfs(root.left)
+            right = dfs(root.right)
+            if left + right > self.dia :
+                self.dia = left + right
+            return max(left, right) + 1
+        dfs(root)
+        return self.dia
+ 3)Merge Two Sorted Lists
+ class Solution:
+    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+        cur = d = ListNode()
+        while list1 and list2:               
+            if list1.val < list2.val:
+                cur.next = list1
+                list1, cur = list1.next, list1
+            else:
+                cur.next = list2
+                list2, cur = list2.next, list2
+                
+        if list1 or list2:
+            cur.next = list1 if list1 else list2
+            
+        return d.next
+   4) Rotate Image
+   class Solution:
+
+    def rotate(self, M: List[List[int]]) -> None:
+
+        n = len(M)
+
+        depth = n // 2
+
+        for i in range(depth):
+
+            rlen, opp = n - 2 * i - 1, n - 1 - i
+
+            for j in range(rlen):
+
+                temp = M[i][i+j]
+
+                M[i][i+j] = M[opp-j][i]
+
+                M[opp-j][i] = M[opp][opp-j]
+
+                M[opp][opp-j] = M[i+j][opp]
+
+                M[i+j][opp] = temp
+            
