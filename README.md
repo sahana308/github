@@ -264,4 +264,63 @@ class Solution:
                 M[opp][opp-j] = M[i+j][opp]
 
                 M[i+j][opp] = temp
-            
+  1-02-2023(LEETCODE)
+1)Binary Tree Maximum Path Sum   
+class Solution:
+    def maxPathSum(self, root: Optional[TreeNode]) -> int:
+
+        self.ans = float('-inf')
+        def leftRightSum(root):
+            if not root:
+                return 0
+            left = max(leftRightSum(root.left), 0)
+            right = max(leftRightSum(root.right), 0)
+            self.ans = max(left+right+root.val, self.ans)
+            return max(left, right) + root.val
+        
+        leftRightSum(root)
+        return self.ans
+ 2)Valid Boomerang
+ class Solution:
+    def isBoomerang(self, points: List[List[int]]) -> bool:
+        x1,y1 = points[0]
+        x2,y2 = points[1]
+        x3,y3 = points[2]
+
+        area = abs(x1*(y2-y3) + x2*(y3-y1) + x3*(y1-y2))
+        if area !=0:
+            return True
+        return False
+ 3)Binary Tree Tilt
+ class Solution:
+    def findTilt(self, root: Optional[TreeNode]) -> int:
+        sum = 0
+        def dfs(root):
+            if not root:
+                return 0
+            else:
+                left = dfs(root.left)
+                right = dfs(root.right)
+                sum = abs(left - right)
+
+            return left + root.val + right
+        dfs(root)
+        return sum
+  4)Remove Duplicates from Sorted List
+ class Solution:
+    def deleteDuplicates(self, head):
+        cur = head
+        while cur != None:
+            if cur.next == None:
+                break
+            else:
+                if cur.val == cur.next.val:
+                    cur.next = cur.next.next
+                else:
+                    cur = cur.next
+        return head
+ 5)Add Binary
+class Solution:
+    def addBinary(self, a: str, b: str) -> str:
+        return bin(int(a,2)+int(b,2))[2:]
+
