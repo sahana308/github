@@ -323,4 +323,153 @@ class Solution:
 class Solution:
     def addBinary(self, a: str, b: str) -> str:
         return bin(int(a,2)+int(b,2))[2:]
+ HACKERRANK(2-02--2023)
+ 1)Tree: Height of a Binary Tree
+ class Node:
+      def __init__(self,info): 
+          self.info = info  
+          self.left = None  
+          self.right = None 
+
+def height(root):
+    l=0
+    r=0
+    if(root.left):
+        l=height(root.left) + 1
+    if(root.right):
+        r=height(root.right) + 1
+    if(l>r):
+        return l
+    else: 
+        return r
+ 2)Binary Search Tree : Lowest Common Ancestor
+ def lca(root, n1, n2):
+    if (root.info < n1 and root.info > n2) or (root.info > n1 and root.info < n2):
+        return root
+    elif root.info < n1 and root.info < n2:
+        return lca(root.right, n1, n2)
+    elif root.info > n1 and root.info > n2:
+        return lca(root.left, n1, n2)
+    elif root.info == n1 or root.info == n2:
+        return root
+ 3)Tree : Top View
+ def topView(root):
+    h={}
+    queue=[]
+    queue.append((root,0))
+    while(queue):
+        q=queue.pop(0)
+        if q[1] not in h:
+            h[q[1]]=q[0].info
+        if q[0].left:
+            queue.append((q[0].left,q[1]-1))
+        if q[0].right:
+            queue.append((q[0].right,q[1]+1))
+    for k, v in sorted(h.items()):
+        print(str(v)+' ', end='')
+  4)Tree: Level Order Traversal
+  def levelOrder(root):
+    res = [root]
+    
+    while(len(res) > 0):
+        a = res.pop(0)
+        print(a.info,end = " ")
+        if (a.left != None):
+            res.append(a.left)
+        if (a.right != None):
+            res.append(a.right)
+  LEETCODE(2-02-2023)
+  1)Validate Binary Search Tree
+  class Solution:
+    def isValidBST(self, root: Optional[TreeNode]) -> bool :
+        def dfs(node, low, high):
+            if not node:
+                return True
+            if not (low < node.val < high):
+                return False
+            return dfs(node.left, low, node.val) and dfs(node.right, node.val, high)
+        
+        return dfs(root, -inf, inf)
+  2)Convert Sorted Array to Binary Search Tree
+  class Solution:
+    def sortedArrayToBST(self, nums: List[int]) -> Optional[TreeNode]:
+        total = len(nums)
+        if not total:
+            return None
+
+        mid_node = total // 2
+        return TreeNode(
+            nums[mid_node], 
+            self.sortedArrayToBST(nums[:mid_node]), self.sortedArrayToBST(nums[mid_node + 1 :])
+        )
+  3)Convert Sorted List to Binary Search Tree
+  class Solution:
+    def sortedListToBST(self, head: Optional[ListNode]) -> Optional[TreeNode]:
+          if not head: return head
+          if not head.next: return TreeNode(head.val)
+        
+          slow, fast = head, head.next.next
+        
+          while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+        
+            tmp = slow.next
+            slow.next = None
+        
+            root = TreeNode(tmp.val)
+            root.left = self.sortedListToBST(head)
+            root.right = self.sortedListToBST(tmp.next)
+                return root
+     4) All Elements in Two Binary Search Trees
+     class Solution:
+    def getAllElements(self, root1, root2):
+        values = []
+        def ct(root):
+            if root:
+                ct(root.left)
+                values.append(root.val)
+                ct(root.right)
+        ct(root1)
+        ct(root2)
+        return sorted(values)
+     5) Minimum Absolute Difference in BST
+     class Solution:
+    def getMinimumDifference(self, root: Optional[TreeNode]) -> int:
+        if not root: return 0
+        
+        nodes = []
+        
+        def inr(root, nodes=[]):
+            if not root: return None
+            
+            inr(root.left, nodes)
+            nodes.append(root.val)
+            inr(root.right, nodes)
+        
+        inr(root, nodes)
+        
+        return min(nodes[x+1] - nodes[x] for x in range(len(nodes) - 1))
+    6)Construct Binary Search Tree from Preorder Traversal
+    class Solution:
+    def bstFromPreorder(self, preorder: List[int]) -> TreeNode:
+        root = TreeNode(preorder[0])
+        s = [root]
+        for value in preorder[1:]:
+            if value < s[-1].val:
+                s[-1].left = TreeNode(value)
+                s.append(s[-1].left)
+            else:
+                while s and s[-1].val < value:
+                    last = s.pop()
+                last.right = TreeNode(value)
+                s.append(last.right)
+        return root
+      7) Insert into a Binary Search Tree
+      class Solution(object):
+    def insertIntoBST(self, root, val):
+        if root is None: return TreeNode(val)
+        if val > root.val: root.right = self.insertIntoBST(root.right, val)  
+        else: root.left = self.insertIntoBST(root.left, val)  
+        return root
 
