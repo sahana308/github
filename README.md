@@ -473,3 +473,36 @@ def height(root):
         else: root.left = self.insertIntoBST(root.left, val)  
         return root
 
+05-02-2023
+import random
+ladder = {3:24,35:55,64:95}
+snake = {12:4,34:16,56:23}
+p1=0
+p2=0
+def move(pos):
+    dice = random.randint(1,6)
+    print(f"Dice:{dice}")
+    pos = pos + dice
+    if pos in snake:
+        print("Bitten by snake")
+        pos = pos[snake]
+        print(f"Position:{pos}")
+    elif pos in ladder:
+        print("Climbed by ladder")
+        pos = pos[ladder]
+        print(f"Position:{pos}")
+    else:
+         print(f"Position:{pos}")
+    print("\n")
+    return pos
+while True:
+    A = input("player 1 enter \"A\" to throw dice:")
+    p1 = move(p1)
+    if p1 >= 100:
+        print("Game over!!!\n Player wins.")
+        break
+    B = input("player 2 enter \"B\" to throw dice:")
+    p2 = move(pos2)
+    if p2 >= 100:
+        print("Game over!!!\n Player wins.")
+        break
