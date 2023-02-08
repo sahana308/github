@@ -506,3 +506,63 @@ while True:
     if p2 >= 100:
         print("Game over!!!\n Player wins.")
         break
+ 07-02-23
+ Number of Islands(LEETCODE)
+ class Solution:
+    def numIslands(self, grid: List[List[str]]) -> int:
+        if not grid: return 0
+
+        isl = 0
+        visited = set()
+
+        for row in range(len(grid)):
+            for col in range(len(grid[0])):
+                isl += self.explore(grid, row, col, visited)
+        
+        return isl
+    
+    def explore(self, grid, row, col, visited):
+        if row < 0 or row >= len(grid) or col < 0 or col >= len(grid[row]) or grid[row][col] == "0" or (row, col) in visited:
+            return 0
+        
+        visited.add((row, col))
+
+        self.explore(grid, row + 1, col, visited)
+        self.explore(grid, row - 1, col, visited)
+        self.explore(grid, row, col + 1, visited)
+        self.explore(grid, row, col - 1, visited)
+
+        return 1
+ 08-02-2023
+ Rotting Oranges(LEETCODE)
+ class Solution:
+    def orangesRotting(self, grid: List[List[int]]) -> int:
+        fresh = 0 
+        time = 0
+        m,n = len(grid),len(grid[0])
+        directions = [[0,1],[0,-1],[1,0],[-1,0]]
+        q = collections.deque() 
+        
+        for r in range(m):
+            for c in range(n):
+                if grid[r][c] == 1:
+                    fresh += 1
+                elif grid[r][c] == 2:
+                    q.append((r,c))
+        
+        while q and fresh > 0:
+            for _ in range(len(q)):
+                r,c = q.popleft()
+                for d in directions:
+                    row,col = r + d[0],c + d[1]
+                    if (row >= 0 and row < m and col >= 0 and col < n
+                         and grid[row][col] == 1):
+                        fresh -= 1
+                        grid[row][col] = 2
+                        q.append((row,col))
+                    
+            time += 1
+        
+        return time if not fresh else -1
+                                    
+            
